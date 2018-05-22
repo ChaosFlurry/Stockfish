@@ -9,21 +9,35 @@ public class Board {
     private String enPassantSquare;
     private int halfMoves;
     private int fullMoves;
+    
+    public Board(String[][] squares) {
+        this.squares = squares;
+    }
 
-    public Board(String information, String format) {
+    public Board(String information) {
         String[][] squares = new String[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 squares[i][j] = "";
             }
         }
-        if (format.equals("FEN")) {
+        
+        // TODO Complete FEN pattern
+        if (information.matches("^([wb]) ([KQkq\\-]) ([a-h][1-8]|-) (\\d \\d)$")) {
             generateBoardFromFEN(information);
+        } else if (information.matches("") {
+            generateBoardFromAlgebraicNotation(information);
+        } else if (information.matches(""))) {
+            generateBoardFromUCINotation(information);
         }
     }
 
     private void generateBoardFromFEN(String FEN) {
-        if (FEN.matches())
+        if (FEN.matches("^([wb]) ([KQkq\\-]) ([a-h][1-8]|-) (\\d \\d)$")) {
+        
+        } else {
+            throw new IllegalArgumentException("Invalid FEN");
+        }
         String[] FENInfo = FEN.split(" ");
         for (int r = 8; r > 1; r--) {
             String rowPieces = FENInfo[0].split("/")[r - 8];
@@ -38,19 +52,17 @@ public class Board {
                 }
             }
         }
-
-
     }
-
-    private void generateBoardFromMoves(String moves) {
-
+    
+    private void generateBoardFromAlgebraicNotation(String moves) {
+    
     }
-
-    public Board(String[][] squares) {
-
+    
+    private void generateBoardFromUCINotation(String moves) {
+    
     }
 
     public String getFEN() {
-
+    
     }
 }

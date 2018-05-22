@@ -13,6 +13,4 @@ public class Move {
         // Capture Group 6: if castling occurs
         // Note: This regex can only eliminate improperly formatted moves, and can not verify if a move being made is legal
     }
-
-
 }
