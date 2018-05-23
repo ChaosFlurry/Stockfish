@@ -22,9 +22,17 @@ public class Stockfish {
         // bmi2: ~13 mil n/s
         // popcnt: ~13 mil n/s
     }
+    
+    public Game getGame() {
+        return game;
+    }
+    
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     public Move getBestMove() throws IOException {
-        engineInputWriter.write("position " + game.getMoves() + "\n");
+        engineInputWriter.write("position startpos moves " + game.getMoveListAsString() + "\n");
         engineInputWriter.flush();
         engineInputWriter.write("go" + "\n");
         engineInputWriter.flush();
@@ -32,8 +40,26 @@ public class Stockfish {
         Move bestMove = null;
         while ((engineOutput = engineOutputReader.readLine()) != null) {
             System.out.println(engineOutput);
-            if (engineOutput.matches("bestmove \\[a-h]\\[1-8]\\[a-h]\\[1-8][qrbn]? ponder \\[a-h]\\[1-8]\\[a-h]\\[1-8][qrbn]?")) {
+            if (engineOutput.matches("bestmove [a-h][1-8][a-h][1-8][qrbn]? ponder [a-h][1-8][a-h][1-8][qrbn]?")) {
                 bestMove = new Move(game.getBoard(), engineOutput.split(" ")[1]);
+                break;
+            }
+        }
+        return bestMove;
+    }
+    
+    public Move getBestMove(int time) throws IOException {
+        engineInputWriter.write("position startpos " + game.getMoveListAsString() + "\n");
+        engineInputWriter.flush();
+        engineInputWriter.write("go movetime " + time + "\n");
+        engineInputWriter.flush();
+        String engineOutput;
+        Move bestMove = null;
+        while ((engineOutput = engineOutputReader.readLine()) != null) {
+            System.out.println(engineOutput);
+            if (engineOutput.matches("bestmove [a-h][1-8][a-h][1-8][qrbn]? ponder [a-h][1-8][a-h][1-8][qrbn]?")) {
+                bestMove = new Move(game.getBoard(), engineOutput.split(" ")[1]);
+                break;
             }
         }
         return bestMove;
