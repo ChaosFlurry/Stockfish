@@ -21,6 +21,8 @@ public class Stockfish {
         // results:
         // bmi2: ~13 mil n/s
         // popcnt: ~13 mil n/s
+
+        // https://www.reddit.com/r/chess/comments/7x79ys/syzygy_tablebases_with_stockfish_9/
     }
     
     public Game getGame() {
@@ -49,7 +51,7 @@ public class Stockfish {
     }
     
     public Move getBestMove(int time) throws IOException {
-        engineInputWriter.write("position startpos " + game.getMoveListAsString() + "\n");
+        engineInputWriter.write("position startpos moves " + game.getMoveListAsString() + "\n");
         engineInputWriter.flush();
         engineInputWriter.write("go movetime " + time + "\n");
         engineInputWriter.flush();
